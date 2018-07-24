@@ -1,0 +1,3 @@
+[submodule "plasma/plasma-mvp"]
+	path = plasma/plasma-mvp
+	url = https://github.com/ethereum-plasma/plasma.git
