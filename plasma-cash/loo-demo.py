@@ -14,6 +14,9 @@ w3 = alice.root_chain.w3  # get w3 instance
 
 # Give alice 5 starter animals.
 alice.register()
+print('------------------------------------')
+print('Alice registers and gets 5 animals in the starter pack.')
+print('------------------------------------')
 
 aliceTokensStart = alice.token_contract.balance_of()
 print('Alice has {} LAST tokens'.format(aliceTokensStart))
@@ -27,6 +30,9 @@ assert charlieTokensStart == 0, "START: Charlie has incorrect number of LAST tok
 
 # Alice deposits 3 of her coins to the plasma contract and gets 3 plasma nft
 # utxos in return
+print('------------------------------------')
+print('Alice deposits 3 tokens into the plasma contract, receives 3 plasma NFT UTXOs in return.')
+print('------------------------------------')
 tokenId = 1
 tx_hash, gas_used = alice.deposit(tokenId)
 event_data = alice.root_chain.get_event_data('Deposit', tx_hash)
@@ -52,6 +58,9 @@ assert len(registered_deposits) == 3, "Alice has incorrect number of deposits"
 
 # Alice to Bob, and Alice to Charlie. We care about the Alice to Bob
 # transaction
+print('------------------------------------')
+print('Alice sends a token to Bob.')
+print('------------------------------------')
 alice_to_bob = alice.send_transaction(
     deposit3_utxo, deposit3_block_number, bob.token_contract.account.address
 )
@@ -65,27 +74,41 @@ plasma_block1 = authority.submit_block()
 # Add an empty block in betweeen (for proof of exclusion reasons)
 authority.submit_block()
 
+
 # Bob to Charlie
+print('------------------------------------')
+print('Bob sends a token to Charlie.')
+print('------------------------------------')
 bob_to_charlie = bob.send_transaction(
     deposit3_utxo, plasma_block1, charlie.token_contract.account.address
 )
 
 # This is the info that bob is required to send to charlie. This happens on
 # the P2P layer
+print('Bob includes proofs and history information with his transaction to Charlie')
 incl_proofs, excl_proofs = bob.get_coin_history(deposit3_utxo)
 
 # Charlie receives them, verifies the validity. If found invalid, charlie
 # should not accept them and the demo fails (similar to how you shouldn't sell
 # a good when you're given counterfeit currency)
+print('------------------------------------')
+print('Charlie verifies coin history')
+print('------------------------------------')
 assert charlie.verify_coin_history(deposit3_utxo, incl_proofs, excl_proofs)
 
 plasma_block2 = authority.submit_block()
 
 # Block has been submitted, now we start watching for exits of our coin
+print('------------------------------------')
+print('Charlie watches for exits')
+print('------------------------------------')
 charlie.watch_exits(deposit3_utxo)
 
 # Charlie should be able to submit an exit by referencing blocks 0 and 1 which
 # included his transaction.
+print('------------------------------------')
+print('Charlie submits an exit')
+print('------------------------------------')
 charlie.start_exit(deposit3_utxo, plasma_block1, plasma_block2)
 
 # We exited the coin so we should stop watching
@@ -94,11 +117,17 @@ charlie.stop_watching_exits(deposit3_utxo)
 # Here we should start watching for challenges
 
 # After 8 days pass, charlie's exit should be finalizable
+print('------------------------------------')
+print('Charlie\'s exit is finalized after 8 days.')
+print('------------------------------------')
 increaseTime(w3, 8 * 24 * 3600)
 authority.finalize_exits()
 
 # Charlie should now be able to withdraw the utxo which included token 2 to his
 # wallet.
+print('------------------------------------')
+print('Charlie withdraws his utxo into his wallet.')
+print('------------------------------------')
 charlie.withdraw(deposit3_utxo)
 
 aliceTokensEnd = alice.token_contract.balance_of()

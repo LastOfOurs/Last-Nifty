@@ -1,0 +1,39 @@
+{
+  "name": "implementation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eth-gas-reporter": "^0.1.9",
+    "ganache-cli": "^6.1.3",
+    "growl": "^1.10.5",
+    "openzeppelin-solidity": "1.10.0",
+    "rlp": "^2.0.0",
+    "solium": "^1.1.7",
+    "truffle": "^4.1.11",
+    "truffle-hdwallet-provider": "0.0.3",
+    "truffle-privatekey-provider": "0.0.5",
+    "web3-utils": "^1.0.0-beta.34"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "console": "truffle console --network rpc",
+    "compile": "truffle compile",
+    "test": "truffle test",
+    "test:gas": "GAS_REPORTER=true npm test",
+    "lint": "solium --dir ./contracts",
+    "ganache-cli:dev": "scripts/ganache-cli.sh",
+    "migrate:dev": "rm -rf build && npm run ganache-cli:dev && npm run migrate:dev:contracts",
+    "migrate:dev:contracts": "truffle migrate --all --network rpc > truffle_dev_contracts.log 2>&1",
+    "migrate:prod": "truffle migrate --all --network prod",
+    "prepublishOnly": "truffle compile --all"
+  },
+  "author": "",
+  "license": "ISC"
+}

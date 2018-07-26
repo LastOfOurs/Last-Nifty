@@ -1,0 +1,16 @@
+{
+    "snowleopards": [
+      { "id": 1504199595941238,
+        "extinction-level": "VeryHigh",
+         "Status": "Dead",
+          "area": "Tibet",
+          "habitat": "Tundra" 
+        },
+        { "id": 1504199595941239,
+          "extinction-level": "VeryHigh",
+          "Status": "Alive",
+          "area": "Russia",
+          "habitat": "Tundra" 
+        }
+    ]
+  }
