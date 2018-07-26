@@ -7,7 +7,6 @@ On OSX + Homebrew
 source /usr/local/bin/virtualenvwrapper.sh
 ```
 
-
 ```
 mkvirtualenv erc721plasma --python=/usr/local/bin/python3.6
 pip install -r requirements.txt
@@ -18,18 +17,3 @@ pip install -r requirements.txt
 1. Make sure the contracts are deployed at the correct addresses (`npm run migrate:dev` in `last-server` directory)
 2. Run `FLASK_APP=./child_chain FLASK_ENV=development flask run --port=8546` in one terminal. This will start a Plasma Chain instance which listens at `localhost:8546` and is also connected to the deployed contracts
 3. Run `python loo-demo.py`
-
-TODO Should probably bundle these into makefiles, i.e. `make server` should launch the plasma chain.
-
-
-## Testing
-
-```
-make test
-```
-
-## Linting
-
-```
-make lint
-```
