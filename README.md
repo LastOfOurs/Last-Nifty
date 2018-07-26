@@ -9,11 +9,23 @@ ps. For more information about what Last of Ours is trying to accomplish, please
 ## Project Directory
 
 1. last-clients: Clients implementation of the project ie Decentralland SDK + Donation Client
-2. last-server: simple JSON DB and IPFS files containing Animal Data
-3. Plasma: forked JavaScript implementation of Plasma-MVP. For Scaling in-Game Currency Transactions
-4. Plasma-Cash: forked implementation of Plasma Cash by Loom SDK. For Scaling in-Game Items Transactions
-
+2. Plasma: forked JavaScript implementation of Plasma-MVP by Taiwan Team. For Scaling in-Game Currency Transactions
+3. Plasma-Cash: forked and modified implementation of Plasma Cash by Loom SDK. For Scaling in-Game Items Transactions
+4. DecentralandSDK: Last of Our's implementation of The Last Parcel.
 
 ## User Story
+Last of Ours Project Consist of Three Main User Stories:
+
+1. Plasma Chain Interaction Story
+
+2. Plasma Cash Interaction
+
+3. DecentralandSDK Story
 
 ## Running the Example
+
+### Running Plasma Story
+
+### Running Plasma Cash Story
+
+### Running Decentralland Story

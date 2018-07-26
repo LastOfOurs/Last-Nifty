@@ -3,12 +3,15 @@ import './App.css';
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import Notifications, {notify} from 'react-notify-toast';
-import { Bitski } from 'bitski';
 import fetch from 'node-fetch';
 import PlasmaConfig from './config'
+import tiger from './Malayan_Tiger_Adult.png';
+import wwf from './panda-wwf-logo.jpg'
+import rainforest from './raiforest.jpeg'
+import wcs from './WCS_Logo_SS.png'
 var Web3 = require('web3');
 var web3 = window.web3
-const bitskiInstance = new Bitski('79696607-b6b5-40d8-8665-ca75a1383ad3');
+
 
 
 if (typeof web3 !== 'undefined') {
@@ -103,7 +106,7 @@ class App extends Component {
           }) 
         } else if (body[i].owner == this.state.RecipientAddress){
           this.setState({
-            "fundingAmount" : web3.fromWei(body[i].denom.toString(), 'ether')
+            "fundingAmount" : web3.fromWei(body[i].denom.toString(), 'ether') + " ETH"
           })
         }
       }
@@ -126,13 +129,13 @@ class App extends Component {
       body: `{
         "from": "0x87dbd8Ab1Bd9d4FCE07DB12743594a5f456435ff", 
         "to": "0x3b0ba3134ac12cc065d4dba498a60cba5ef16098", 
-        "amount": 0.3
+        "amount": 3
       }`,
       headers: { 'Content-Type': 'application/json' }  
     })
     await this.mineNewBlock()
     setInterval(()=>{ this.getUtxo() }, 500)
-    
+    notify.show('Transaction Made on Plasma', "success")
   }
 
   /*
@@ -152,11 +155,12 @@ class App extends Component {
   */
  async depositEth(){
   await Plasma.deposit({
-    from: web3.eth.accounts[0], value: 300000000000000000, gas: 300000
+    from: web3.eth.accounts[0], value: 5000000000000000000, gas: 300000
   }, (err, res)=> {
     console.log(res)
     this.mineNewBlock()
     setInterval(()=>{ this.getUtxo() }, 400);
+    notify.show('ETH Deposited to Plasma', "success")
   });
   
 }
@@ -164,7 +168,7 @@ class App extends Component {
 
 
   async signTransaction(){
-    web3.personal.sign(web3.fromUtf8("dinosaur"), web3.eth.coinbase, (err, res)=> {
+    web3.personal.sign(web3.fromUtf8(this.state.RecipientAddress), web3.eth.coinbase, (err, res)=> {
       console.log(res)
       this.sendTransaction()
     });
@@ -179,9 +183,9 @@ class App extends Component {
     return (
       <div className="container">
         <div className ="row">
-          <div className="col s6"><img className=" responsive-img" src="https://images.unsplash.com/photo-1503066211613-c17ebc9daef0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=db24a634bad2f3b05cfe733c26e7680f&w=1000&q=80" />
+          <div className="col s6"><img className=" responsive-img" src={tiger} />
           </div>
-          <div className="col s6">
+          <div className="card col s6">
             <h5>Animal ID:</h5>
             {this.state.AnimalId}
             <h5>Animal Name:</h5>
@@ -190,23 +194,35 @@ class App extends Component {
             {this.state.AnimalCommonName}
             <h5>Animal Science name:</h5>
             {this.state.AnimalScienceName}
-            <h4>Habitat:</h4>
+            <h5>Habitat:</h5>
             {this.state.AnimalHabitat}
           </div>
         </div>
-        <div className="funding">
-          <h4>Funding Goal1 :</h4>
-          {this.state.fundingAmount}
+        <div className="row">
+          <h5>Non-profit Animal Funds</h5>
+          <div className="card col s3">
+          
+            <h4>WWF Fund:</h4>
+            <h5>{this.state.fundingAmount}</h5>
+          </div>
+          <div className="card col s3">
+            <h4>WCS Fund:</h4>
+            <h5>{this.state.fundingAmount}</h5>
+          </div>
+          <div className="card col s3">
+            <h4>WildLife Act</h4>
+            <h5>{this.state.fundingAmount}</h5>
+          </div>
         </div>
         
         <div className="row">
           <div className="col s6">
-            <h4>Your Plasma ETH Balance</h4>
-            {this.state.DonerEth}
+            <h5>Your Plasma Balance</h5>
+            {this.state.DonerEth + " ETH"}
           </div>
           <div className="col s6">
-            <h4>Your ETH Balance</h4>
-            {this.state.DonorMainnetEth}
+            <h5>Your Mainnet Balance</h5>
+            {this.state.DonorMainnetEth + " ETH"}
           </div>
         </div>
         <div class="row">
@@ -219,12 +235,15 @@ class App extends Component {
               </div>
               <div class="input-field col s6">
                 <input id="topup" type="email" class="validate"/>
-                <label for="topup">Top up ETH on Plasma</label>
+                <label for="topup">Deposit ETH on Plasma</label>
                 <a onClick={this.depositEth} class="waves-effect waves-light btn">Top-up ETH on Plasma</a>
               </div>
             </div>
           </form>
         </div>
+        <div className='main'>
+              <Notifications />
+             </div>
       </div>
     );
   }
