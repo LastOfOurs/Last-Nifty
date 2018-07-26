@@ -1,0 +1,8 @@
+{
+    "animals": [
+      { "id": 1504199595941241, 
+        "animal": "Snow Leopard",
+         "name": "Lisa",
+        "status": "http://localhost:3000/snowleopards/1504199595941241" }
+    ]
+  }
