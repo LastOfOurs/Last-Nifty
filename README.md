@@ -21,8 +21,8 @@ Please install the following dependences before you install the CLI:
 - IPFS
 - Python 2.7.x
 
-To install the CLI on Mac OS#
-On Mac OS, simply run the following command:
+
+### On Mac OS, simply run the following command:
 
 ```
 npm install -g decentraland
